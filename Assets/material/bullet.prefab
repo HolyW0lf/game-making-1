@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4240249833534522318}
   - component: {fileID: 7476589717849709036}
   - component: {fileID: 3369398105756550620}
-  - component: {fileID: 5061811378127000051}
   - component: {fileID: 234134587694724404}
   - component: {fileID: 9149174321100777079}
+  - component: {fileID: 8236674051573963630}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Untagged
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 6902001655736581172}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.53, y: 8.38, z: -10.62}
-  m_LocalScale: {x: 0.11653963, y: 0.10521103, z: 0.14524655}
+  m_LocalPosition: {x: 104.53, y: 8.39223, z: -10.62}
+  m_LocalScale: {x: 0.11653963, y: 0.11586785, z: 0.14524655}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5061811378127000051
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902001655736581172}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &234134587694724404
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,3 +125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e39ac7f3631ab4e9f802c04303c42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 20
+--- !u!65 &8236674051573963630
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6902001655736581172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Opponent
+  - WayPoints
   layers:
   - Default
   - TransparentFX

@@ -27,7 +27,7 @@ public class DoorScript : MonoBehaviour
     private void TaggleDoorState()
     {
         doorState = !doorState;
-        animator.SetBool("open", doorState);
+        animator.SetBool("DoorState", doorState);
 
     }
     private void OnTriggerEnter(Collider col)
@@ -41,7 +41,6 @@ public class DoorScript : MonoBehaviour
         if (col.gameObject.tag == "Player") inRange = false;
 
     }
-
 
 
 

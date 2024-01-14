@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemay : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public int HP = 100;
     public Animator animator;

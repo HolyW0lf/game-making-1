@@ -32,9 +32,17 @@ public class AudioManager : MonoBehaviour {
 
 	public void Play(string sound)
 	{
-		Sound s = Array.Find(sounds, item => item.name == sound);
-		s.source.Play();
-	}
+        Sound s = Array.Find(sounds, item => item.name == sound);
+
+        if (s != null && s.source != null)
+        {
+            s.source.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + sound + " not found or AudioSource is null.");
+        }
+    }
 	public void Stop(string sound)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);

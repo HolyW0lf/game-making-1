@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 
 public class Gun : MonoBehaviour
 {
     private AudioManager audioManager;
+
+    public Sound[] sounds;
 
     public Transform fpsCam;
     public float range = 20;
@@ -58,8 +61,10 @@ public class Gun : MonoBehaviour
         if (isReloading)
             return;
 
+        // Check if the shooting action is in progress
         bool isShooting = shoot.ReadValue<float>() > 0.5f;
 
+        // Check if the shooting state has changed
         if (isShooting && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -71,16 +76,37 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
         }
     }
+    public void Play(string sound)
+    {
+        Sound s = Array.Find(sounds, item => item.name == sound);
+
+        if (s != null && s.source != null)
+        {
+            Debug.Log("Playing sound: " + sound);
+            s.source.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Sound with name " + sound + " not found or AudioSource is null.");
+        }
+    }
 
     private void Fire()
     {
-        AudioManager.instance.Play("Shoot");
+        Debug.Log("Firing!");
 
-        muzzleFlash.Play();
+        if (muzzleFlash != null && !muzzleFlash.isPlaying)
+        {
+            muzzleFlash.Play();
+        }
+
         currentAmmo--;
+
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.position + fpsCam.forward, fpsCam.forward, out hit, range))
         {
+            Debug.Log("Hit: " + hit.transform.name);
+
             if (hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
@@ -95,8 +121,31 @@ public class Gun : MonoBehaviour
 
             Quaternion impactRotation = Quaternion.LookRotation(hit.normal);
             GameObject impact = Instantiate(impactEffect, hit.point, impactRotation);
-            impact.transform.parent = hit.transform;
-            Destroy(impact, 5);
+
+            // Check if the ParticleSystem component is present before accessing it
+            ParticleSystem particleSystem = impact.GetComponent<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.transform.parent = hit.transform;
+                Destroy(impact, 5);
+            }
+            else
+            {
+                Debug.LogWarning("Impact effect is missing ParticleSystem component.");
+            }
+        }
+
+        StartCoroutine(StopMuzzleFlash());
+        audioManager?.Play("Shoot"); // Using the null-conditional operator to avoid null reference
+    }
+
+    IEnumerator StopMuzzleFlash()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Stop();
         }
     }
 

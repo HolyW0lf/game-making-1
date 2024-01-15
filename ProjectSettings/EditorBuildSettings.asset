@@ -32,4 +32,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New Folder/levels/testing sceen.unity
     guid: ca6048b3357ba2144a29c5a2cab7eec5
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

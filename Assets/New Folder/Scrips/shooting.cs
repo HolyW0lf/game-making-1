@@ -1,25 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class shooting : MonoBehaviour
+public class EnemyShooting : MonoBehaviour
 {
-    public GameObject bulletPredab;
-    public Transform shootingpoint;
+    public Transform player;
+    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint;
+    public float bulletSpeed = 30f;
+    public float timeBetweenShots = 0.5f;
+    public float attackRange = 10f; // Set this to the attack range of your enemy
 
-    // Start is called before the first frame update
-    void Start()
+    private float timeSinceLastShot;
+
+    private void Update()
     {
-        
+        // Check if the player is within attack range
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        {
+            // Rotate towards the player
+            transform.LookAt(player);
+
+            // Shooting logic
+            timeSinceLastShot += Time.deltaTime;
+
+            if (timeSinceLastShot >= timeBetweenShots)
+            {
+                Shoot();
+                timeSinceLastShot = 0f;
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1"))
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+        if (bulletRb != null)
         {
-             GameObject bullet =  Instantiate(bulletPredab, shootingpoint.position, Quaternion.identity );
-            bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 5000f);
-        }   
+            // Set the bullet's velocity
+            bulletRb.velocity = bulletSpawnPoint.forward * bulletSpeed;
+        }
+        else
+        {
+            Debug.LogError("Bullet prefab is missing Rigidbody component.");
+        }
     }
 }

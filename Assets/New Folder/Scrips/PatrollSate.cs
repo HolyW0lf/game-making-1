@@ -26,17 +26,25 @@ public class PatrollSate : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.Log("Patrol State Update");
+
         if (agent.remainingDistance <= agent.stoppingDistance)
             agent.SetDestination(WayPoints[Random.Range(0, WayPoints.Count)].position);
+
         timer += Time.deltaTime;
-        if (timer < 5) 
+        if (timer < 5)
             animator.SetBool("IsPatrolling", false);
 
         float distance = Vector3.Distance(Player.position, animator.transform.position);
-        if (distance < chaseRange)
-            animator.SetBool("IsCaseing", true);
+        Debug.Log("Distance to Player: " + distance);
 
+        if (distance < chaseRange)
+        {
+            Debug.Log("Chasing Player");
+            animator.SetBool("IsChasing", true);
+        }
     }
+
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

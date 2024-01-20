@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
 
 public class Gun : MonoBehaviour
@@ -76,6 +76,7 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
         }
     }
+
     public void Play(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
@@ -105,6 +106,13 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.position + fpsCam.forward, fpsCam.forward, out hit, range))
         {
+            EnemyAIScript enemyAIScript = hit.transform.GetComponent<EnemyAIScript>();
+            if (enemyAIScript != null)
+            {
+                enemyAIScript.TakeDamage(damageAmount);
+                return;
+            }
+
             Debug.Log("Hit: " + hit.transform.name);
 
             if (hit.rigidbody != null)

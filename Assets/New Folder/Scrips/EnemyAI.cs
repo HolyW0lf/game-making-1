@@ -54,12 +54,12 @@ public class EnemyAi : MonoBehaviour
         {
             // Attack code here
             GameObject projectileObject = Instantiate(projectile, transform.position, Quaternion.identity);
-
-            // Assuming your projectile has a script with a ShootAt method for shooting at the player
             ProjectileScript projectileScript = projectileObject.GetComponent<ProjectileScript>();
+
             if (projectileScript != null)
             {
-                projectileScript.ShootAt(player);
+                // Set the initial position and shoot at the player
+                // projectileScript.ShootAt(player);
             }
             else
             {

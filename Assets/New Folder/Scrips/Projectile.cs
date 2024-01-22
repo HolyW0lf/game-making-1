@@ -1,31 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damageAmount = 5;
+    public GameObject impactEffect;
+    public float radius = 3;
+    public int damageAmount = 15;
 
-    private void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject, 3f); // Destroy the bullet after 3 seconds (adjust as needed)
-    }
+        Debug.Log("Projectile collided with something");
+        FindObjectOfType<AudioManager>().Play("Explosion");
+        GameObject impact = Instantiate(impactEffect, transform.position, Quaternion.identity);
+        Destroy(impact, 2);
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider nearbyObject in colliders)
         {
-            Debug.Log("Collision with Player");
-            DealDamageToPlayer(other.gameObject);
-            Destroy(gameObject);
+            if (nearbyObject.CompareTag("Player"))
+            {
+                PlayerManager playerManager = nearbyObject.GetComponent<PlayerManager>();
+                if (playerManager != null)
+                {
+                    // Call the TakeDamage method when the player is hit
+                    playerManager.TakeDamage(damageAmount);
+                    Debug.Log("Player takes damage: " + damageAmount);
+                }
+            }
         }
-    }
 
-    private void DealDamageToPlayer(GameObject player)
-    {
-        PlayerManager playerManager = player.GetComponent<PlayerManager>();
-        if (playerManager != null)
-        {
-            StartCoroutine(playerManager.TakeDamage(damageAmount));
-        }
+        this.enabled = false;
     }
 }

@@ -1,7 +1,7 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject bloodOverlay;
 
     public static bool isGameOver;
+
     void Start()
     {
         isGameOver = false;
@@ -19,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerHPText.text = "+" + playerHP;
+        playerHPText.text = "100 " + playerHP;
         if (isGameOver)
         {
             SceneManager.LoadScene("Level");
@@ -31,10 +32,13 @@ public class PlayerManager : MonoBehaviour
         bloodOverlay.SetActive(true);
         playerHP -= damageAmount;
         if (playerHP <= 0)
+        {
             isGameOver = true;
+        }
 
         yield return new WaitForSeconds(1);
         bloodOverlay.SetActive(false);
 
+        Debug.Log("Player's health: " + playerHP);
     }
 }

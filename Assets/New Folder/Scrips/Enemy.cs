@@ -1,30 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int HP = 100;
-    public Animator animator;
+    public int damageValue = 10; // Adjust this value based on the damage the enemy should deal
 
-   
-    public void TakeDamage(int DamageAmount)
+    // Getter method for retrieving the damage value
+    public int GetDamageValue()
     {
-        HP -= DamageAmount;
-        if (HP <= 0)
-        {
-            AudioManager.instance.Play("enemy_die");
-            animator.SetTrigger("Die");
-            GetComponent<Collider>().enabled = false;
-
-        }
-        else
-        {
-            AudioManager.instance.Play("enemy_hit");
-            animator.SetTrigger("Damage");
-
-        }
+        return damageValue;
     }
 
-
+    // Method to handle taking damage
+    public void TakeDamage(int damage, PlayerManager player)
+    {
+        // Implement logic to handle taking damage here
+        // For example, reduce health by the damage amount
+        player.TakeDamage(damage);
+    }
 }

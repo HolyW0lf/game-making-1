@@ -1,8 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
-
+using System.Collections;
 public class Gun : MonoBehaviour
 {
     private AudioManager audioManager;
@@ -106,10 +105,12 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.position + fpsCam.forward, fpsCam.forward, out hit, range))
         {
-            EnemyAIScript enemyAIScript = hit.transform.GetComponent<EnemyAIScript>();
-            if (enemyAIScript != null)
+            Enemy2 enemy2 = hit.transform.GetComponent<Enemy2>();
+            if (enemy2 != null)
             {
-                enemyAIScript.TakeDamage(damageAmount);
+                enemy2.TakeDamage(damageAmount);
+                enemy2.Shoot(); // Call the Shoot method when hitting an enemy
+                Debug.Log("Hit enemy: " + enemy2.gameObject.name);
                 return;
             }
 
@@ -120,12 +121,8 @@ public class Gun : MonoBehaviour
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
 
-            Enemy e = hit.transform.GetComponent<Enemy>();
-            if (e != null)
-            {
-                e.TakeDamage(damageAmount);
-                return;
-            }
+            // Additional handling for other enemy types can be added here
+            // ...
 
             Quaternion impactRotation = Quaternion.LookRotation(hit.normal);
             GameObject impact = Instantiate(impactEffect, hit.point, impactRotation);
@@ -146,6 +143,7 @@ public class Gun : MonoBehaviour
         StartCoroutine(StopMuzzleFlash());
         audioManager?.Play("Shoot"); // Using the null-conditional operator to avoid null reference
     }
+
 
     IEnumerator StopMuzzleFlash()
     {

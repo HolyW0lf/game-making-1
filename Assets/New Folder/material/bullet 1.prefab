@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactEffect: {fileID: 100000, guid: a817de05addd7b64faa73b34c74013ce, type: 3}
-  radius: 20
+  radius: 50
   damageAmount: 10
 --- !u!54 &6157674969201672223
 Rigidbody:

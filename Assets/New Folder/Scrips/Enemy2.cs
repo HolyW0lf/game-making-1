@@ -5,6 +5,7 @@ public class Enemy2 : MonoBehaviour
     public int enemyHP = 100;
     public GameObject projectile;
     public Transform projectilePoint;
+    public int damageAmount = 15;
 
     public Animator animator;
 

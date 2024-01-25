@@ -628,6 +628,7 @@ MonoBehaviour:
   enemyHP: 100
   projectile: {fileID: 1752006607254278203, guid: f61403a7cd900114aa0ca13e06aa70b4, type: 3}
   projectilePoint: {fileID: 1743293365}
+  damageAmount: 15
   animator: {fileID: 969670573}
 --- !u!195 &969670576
 NavMeshAgent:
@@ -1942,7 +1943,7 @@ GameObject:
   - component: {fileID: 2872165026527135794}
   - component: {fileID: 5215418665645424467}
   m_Layer: 9
-  m_Name: PlayerHealth
+  m_Name: pslayerHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2549,6 +2550,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHPText: {fileID: 5215418665645424467}
   bloodOverlay: {fileID: 6936181567045687701}
+  nearbyObject: {fileID: 8441089265034629467}
+  damageAmount: 15
+  radius: 50
 --- !u!4 &4357303972645925724
 Transform:
   m_ObjectHideFlags: 0
